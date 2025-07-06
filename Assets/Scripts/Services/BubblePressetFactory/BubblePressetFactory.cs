@@ -1,4 +1,5 @@
 using NotBubbleFall.Data;
+using NotBubbleFall.Gameplay;
 using UnityEngine;
 
 namespace NotBubbleFall.Services
@@ -9,7 +10,10 @@ namespace NotBubbleFall.Services
 
         public GameObject CreateRandomBubblePresset(int phase)
         {
-            return Object.Instantiate(_bubblePresetDB.GetRandomPresset(phase));
+            var bubblePressetObject = Object.Instantiate(_bubblePresetDB.GetRandomPresset(phase));
+            bubblePressetObject.GetComponent<BubblePresset>().Initialize();
+
+            return bubblePressetObject;
         }
 
         public void Inject()

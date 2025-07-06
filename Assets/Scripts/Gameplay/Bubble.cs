@@ -16,7 +16,7 @@ namespace NotBubbleFall.Gameplay
     }
 
     [RequireComponent(typeof(MeshRenderer))]
-    public class Bubble : Projectile
+    public class Bubble : MonoBehaviour
     {
         public List<Bubble> Connections => _connections;
         public BubbleColorType BubbleColor => _bubbleColor;
@@ -26,15 +26,6 @@ namespace NotBubbleFall.Gameplay
 
         private MeshRenderer _meshRenderer;
         private ProjectileDB _projectileDB;
-
-        public void Initialize()
-        {
-            _meshRenderer = GetComponent<MeshRenderer>();
-            _projectileDB = ServiceLocator.Resolve<ProjectileDB>();
-
-            // Set the initial bubble color based on the material
-            _bubbleColor = _projectileDB.BubblesData.FirstOrDefault(d => d.BubbleMaterial == _meshRenderer.sharedMaterial)?.BubbleColor ?? default;
-        }
 
         public void SetColor(BubbleColorType bubbleColor)
         {
@@ -68,6 +59,15 @@ namespace NotBubbleFall.Gameplay
             {
                 _connections.Remove(bubble);
             }
+        }
+
+        private void Awake()
+        {
+            _meshRenderer = GetComponent<MeshRenderer>();
+            _projectileDB = ServiceLocator.Resolve<ProjectileDB>();
+
+            // Set the initial bubble color based on the material
+            _bubbleColor = _projectileDB.BubblesData.FirstOrDefault(d => d.BubbleMaterial == _meshRenderer.sharedMaterial)?.BubbleColor ?? default;
         }
     }
 }

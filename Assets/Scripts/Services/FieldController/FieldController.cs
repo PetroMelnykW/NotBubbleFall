@@ -2,7 +2,6 @@ using NotBubbleFall.Data;
 using NotBubbleFall.Gameplay;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Android.Gradle;
 using UnityEngine;
 
 namespace NotBubbleFall.Services
@@ -54,6 +53,23 @@ namespace NotBubbleFall.Services
                 BubbleColorType.Green,
                 BubbleColorType.Yellow,
             }; // Example allowed colors, can be modified as needed
+        }
+
+        public void AddBubble(Bubble bubble)
+        {
+            if (!_bubbles.Contains(bubble))
+            {
+                _bubbles.Add(bubble);
+                bubble.transform.SetParent(_bubbleParent, true);
+            }
+        }
+
+        public void RemoveBubble(Bubble bubble)
+        {
+            if (_bubbles.Contains(bubble))
+            {
+                _bubbles.Remove(bubble);
+            }
         }
 
         private void Awake()

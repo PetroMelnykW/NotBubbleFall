@@ -7,11 +7,11 @@ namespace NotBubbleFall.Gameplay
     {
         [SerializeField] private List<BubbleColorType> _disallowedRandomColors;
 
-        private void Awake()
-        {
-            var fieldController = ServiceLocator.Resolve<IFieldController>();
+        private IFieldController _fieldController;
 
-            var allowedColors = fieldController.GetAllowedColors();
+        public void Initialize()
+        {
+            var allowedColors = _fieldController.GetAllowedColors();
             allowedColors.RemoveAll(color => _disallowedRandomColors.Contains(color));
 
             foreach (Transform row in transform)
@@ -19,7 +19,6 @@ namespace NotBubbleFall.Gameplay
                 foreach (Transform bubbleTransform in row)
                 {
                     var bubble = bubbleTransform.GetComponent<Bubble>();
-                    bubble.Initialize();
 
                     if (bubble.BubbleColor == BubbleColorType.Default)
                     {
@@ -27,6 +26,11 @@ namespace NotBubbleFall.Gameplay
                     }
                 }
             }
+        }
+
+        private void Awake()
+        {
+            _fieldController = ServiceLocator.Resolve<IFieldController>();
         }
 
         private BubbleColorType GetRandomBubbleColor(List<BubbleColorType> from)

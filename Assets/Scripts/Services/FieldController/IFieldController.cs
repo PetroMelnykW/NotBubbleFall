@@ -10,5 +10,7 @@ namespace NotBubbleFall
         void StardField();
         void StopField();
         void ResetField();
+        void AddBubble(Bubble bubble);
+        void RemoveBubble(Bubble bubble);
     }
 }
