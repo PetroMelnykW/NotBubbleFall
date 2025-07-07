@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace NotBubbleFall
 {
     public interface IGameManager : IService

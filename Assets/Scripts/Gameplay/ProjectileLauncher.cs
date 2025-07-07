@@ -26,9 +26,6 @@ namespace NotBubbleFall.Gameplay
                 testProjectile.transform.position = transform.position;
                 testProjectile.GetComponent<Projectile>().SetDirection(Vector3.forward + Vector3.left);
             }
-
-
-
         }
     }
 }
