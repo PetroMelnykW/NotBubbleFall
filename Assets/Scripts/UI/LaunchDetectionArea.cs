@@ -11,7 +11,7 @@ namespace NotBubbleFall.UI
         private int _activeTouchId = -1;
 
         private RectTransform _rectTransform;
-        [SerializeField] private Camera _uiCamera;
+        private IGameManager _gameManager;
 
         private void OnEnable()
         {
@@ -28,10 +28,22 @@ namespace NotBubbleFall.UI
         private void Start()
         {
             _rectTransform = GetComponent<RectTransform>();
+            _gameManager = ServiceLocator.Resolve<IGameManager>();
         }
 
         private void LateUpdate()
         {
+            HandleTouch();
+        }
+
+        private void HandleTouch()
+        {
+            if (!_gameManager.IsGameRunning)
+            {
+                _activeTouchId = -1;
+                return;
+            }
+
             foreach (var touch in Touch.activeTouches)
             {
                 if (touch.phase == TouchPhase.Began && _activeTouchId == -1)

@@ -11,6 +11,9 @@ namespace NotBubbleFall.Services
         private IAnimatable _HUD;
 
         private bool _isStarting = false;
+        private bool _isGameRunning = false;
+
+        public bool IsGameRunning => _isGameRunning;
 
         public async void StartGame()
         {
@@ -21,17 +24,23 @@ namespace NotBubbleFall.Services
             await _HUD.PlayAnimation("Show");
 
             _fieldController.StardField();
+
+            _isGameRunning = true;
         }
 
         public void EndGame()
         {
             _fieldController.StopField();
+
+            _isGameRunning = false;
         }
 
         public void ResetGame()
         {
             _fieldController.StopField();
             _fieldController.ResetField();
+
+            _isGameRunning = false;
         }
 
         private void Awake()

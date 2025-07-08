@@ -6,7 +6,9 @@ namespace NotBubbleFall.Gameplay
 {
     public class ProjectileLauncher : MonoBehaviour
     {
-        [SerializeField] private GameObject _testProjectilePrefab;
+        const float HintMarkerShowLimit = 1.8f;
+
+        [SerializeField] private Transform _directionHint;
 
         private BubbleProjectile _currentProjectile;
         private Projectile _replacingProjectile = null;
@@ -33,8 +35,18 @@ namespace NotBubbleFall.Gameplay
         private void LaunchProjectile(Vector3 direction)
         {
             // TODO
-            var projectile = Instantiate(_testProjectilePrefab, transform.position, Quaternion.identity).GetComponent<BubbleProjectile>();
+            var projectile = Instantiate(_projectileDB.BubbleProjectilePrefab, transform.position, Quaternion.identity).GetComponent<BubbleProjectile>();
             projectile.SetDirection(direction);
+        }
+
+        private void SetHintDirection(Vector3 target)
+        {
+            var targetPosition = new Vector3(target.x, 0.25f, target.z);
+            _directionHint.transform.LookAt(targetPosition);
+            foreach (Transform marker in _directionHint)
+            {
+                marker.gameObject.SetActive(Mathf.Abs(marker.position.x) < HintMarkerShowLimit);
+            }
         }
 
         private void SwitchBubbles()
@@ -42,7 +54,7 @@ namespace NotBubbleFall.Gameplay
 
         }
 
-        private Vector3 GetPointAtHeight(Vector2 screenPosition)
+        private Vector3 GetPointInWorld(Vector2 screenPosition)
         {
             Ray ray = Camera.main.ScreenPointToRay(screenPosition);
 
@@ -53,14 +65,19 @@ namespace NotBubbleFall.Gameplay
 
         private void OnLaunchTouchMoved(object sender, LaunchTouchMovedSignal signalData)
         {
-            
+            _directionHint.gameObject.SetActive(signalData.isInLaunchableZone);
+            if (signalData.isInLaunchableZone)
+            {
+                SetHintDirection(GetPointInWorld(signalData.touchPosition));
+            }
         }
 
         private void OnLaunchTouchEnded(object sender, LaunchTouchEndedSignal signalData)
         {
             if (signalData.isInLaunchableZone)
             {
-                LaunchProjectile((GetPointAtHeight(signalData.releasePosition) - transform.position).normalized);
+                LaunchProjectile((GetPointInWorld(signalData.releasePosition) - transform.position).normalized);
+                _directionHint.gameObject.SetActive(false);
             }
         }
     }
