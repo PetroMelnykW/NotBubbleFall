@@ -46,15 +46,6 @@ namespace NotBubbleFall.Services
             }
         }
 
-        public List<BubbleColorType> GetAllowedColors()
-        {
-            return new List<BubbleColorType> {
-                BubbleColorType.Red,
-                BubbleColorType.Green,
-                BubbleColorType.Yellow,
-            }; // Example allowed colors, can be modified as needed
-        }
-
         public void AddBubble(Bubble bubble)
         {
             if (!_bubbles.Contains(bubble))

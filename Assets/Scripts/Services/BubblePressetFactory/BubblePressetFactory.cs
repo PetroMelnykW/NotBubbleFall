@@ -6,11 +6,11 @@ namespace NotBubbleFall.Services
 {
     public class BubblePressetFactory : IBubblePressetFactory
     {
-        private BubblePresetDB _bubblePresetDB;
+        private BubbleDB _bubbleDB;
 
         public GameObject CreateRandomBubblePresset(int phase)
         {
-            var bubblePressetObject = Object.Instantiate(_bubblePresetDB.GetRandomPresset(phase));
+            var bubblePressetObject = Object.Instantiate(_bubbleDB.GetRandomUnlcokedPressetForPhase(phase));
             bubblePressetObject.GetComponent<BubblePresset>().Initialize();
 
             return bubblePressetObject;
@@ -18,7 +18,7 @@ namespace NotBubbleFall.Services
 
         public void Inject()
         {
-            _bubblePresetDB = ServiceLocator.Resolve<BubblePresetDB>();
+            _bubbleDB = ServiceLocator.Resolve<BubbleDB>();
         }
     }
 

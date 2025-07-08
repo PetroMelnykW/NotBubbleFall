@@ -25,12 +25,12 @@ namespace NotBubbleFall.Gameplay
         private BubbleColorType _bubbleColor = BubbleColorType.Default;
 
         private MeshRenderer _meshRenderer;
-        private ProjectileDB _projectileDB;
+        private BubbleDB _bubbleDB;
 
         public void SetColor(BubbleColorType bubbleColor)
         {
             _bubbleColor = bubbleColor;
-            _meshRenderer.material = _projectileDB.GetBubbleData(bubbleColor).BubbleMaterial;
+            _meshRenderer.material = _bubbleDB.GetBubbleData(bubbleColor).BubbleMaterial;
         }
 
         public void AddMutualConnection(Bubble bubble)
@@ -64,10 +64,10 @@ namespace NotBubbleFall.Gameplay
         private void Awake()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
-            _projectileDB = ServiceLocator.Resolve<ProjectileDB>();
+            _bubbleDB = ServiceLocator.Resolve<BubbleDB>();
 
             // Set the initial bubble color based on the material
-            _bubbleColor = _projectileDB.BubblesData.FirstOrDefault(d => d.BubbleMaterial == _meshRenderer.sharedMaterial)?.BubbleColor ?? default;
+            _bubbleColor = _bubbleDB.BubblesData.FirstOrDefault(d => d.BubbleMaterial == _meshRenderer.sharedMaterial)?.BubbleColor ?? default;
         }
     }
 }

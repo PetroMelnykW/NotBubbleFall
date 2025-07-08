@@ -1,3 +1,4 @@
+using NotBubbleFall.Data;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,10 +9,11 @@ namespace NotBubbleFall.Gameplay
         [SerializeField] private List<BubbleColorType> _disallowedRandomColors;
 
         private IFieldController _fieldController;
+        private BubbleDB _bubbleDB;
 
         public void Initialize()
         {
-            var allowedColors = _fieldController.GetAllowedColors();
+            var allowedColors = _bubbleDB.GetUnlockedColorsForPhase(_fieldController.CurrentPhase);
             allowedColors.RemoveAll(color => _disallowedRandomColors.Contains(color));
 
             foreach (Transform row in transform)
@@ -31,6 +33,7 @@ namespace NotBubbleFall.Gameplay
         private void Awake()
         {
             _fieldController = ServiceLocator.Resolve<IFieldController>();
+            _bubbleDB = ServiceLocator.Resolve<BubbleDB>();
         }
 
         private BubbleColorType GetRandomBubbleColor(List<BubbleColorType> from)

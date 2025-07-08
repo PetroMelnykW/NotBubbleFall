@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2efb3e734df39347a21fcd9c3610277, type: 3}
+  m_Name: BubbleDB
+  m_EditorClassIdentifier: 
+  _bubblesData:
+  - _bubbleColor: 0
+    _bubbleMaterial: {fileID: 2100000, guid: a1bb9b632e7c70444b332e1bba60910a, type: 2}
+  - _bubbleColor: 1
+    _bubbleMaterial: {fileID: 2100000, guid: b9b7eb2a654adef4b802be44099ca70c, type: 2}
+  - _bubbleColor: 2
+    _bubbleMaterial: {fileID: 2100000, guid: 02cb8cab0f5986f4aa3246e1391daa03, type: 2}
+  - _bubbleColor: 3
+    _bubbleMaterial: {fileID: 2100000, guid: f4243fa168b24f647b029ada81aab55e, type: 2}
+  - _bubbleColor: 4
+    _bubbleMaterial: {fileID: 2100000, guid: e144189eac5dc9041a633e5c14c2620b, type: 2}
+  - _bubbleColor: 5
+    _bubbleMaterial: {fileID: 2100000, guid: b308be6bed243124da4213768634498a, type: 2}
+  _phaseConfigs:
+  - _phase: 0
+    _unlockedPresets:
+    - {fileID: 1149618378574091332, guid: 9b53718e677b1c54a89d93effe8d7fcd, type: 3}
+    _unlockedBubbleProjectileColors: 030000000400000001000000

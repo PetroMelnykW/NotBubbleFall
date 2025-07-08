@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileDB: {fileID: 11400000, guid: 4290e976ba709f448a32798adbe7e4b5, type: 2}
-  _bubblePresetDB: {fileID: 11400000, guid: 80339249750c21448b3fe019605f3a4d, type: 2}
+  _bubbleDB: {fileID: 11400000, guid: 80339249750c21448b3fe019605f3a4d, type: 2}
+  _fieldConfig: {fileID: 0}
 --- !u!1 &3225869552645705834
 GameObject:
   m_ObjectHideFlags: 0

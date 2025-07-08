@@ -6,18 +6,18 @@ namespace NotBubbleFall
     public class ProjectContext : Context
     {
         [SerializeField] private ProjectileDB _projectileDB;
-        [SerializeField] private BubblePresetDB _bubblePresetDB;
+        [SerializeField] private BubbleDB _bubbleDB;
 
         protected override void Create()
         {
             ServiceLocator.Register(_projectileDB);
-            ServiceLocator.Register(_bubblePresetDB);
+            ServiceLocator.Register(_bubbleDB);
         }
 
         protected override void Deinitialize()
         {
             ServiceLocator.Unregister(_projectileDB);
-            ServiceLocator.Unregister(_bubblePresetDB);
+            ServiceLocator.Unregister(_bubbleDB);
         }
     }
 }
