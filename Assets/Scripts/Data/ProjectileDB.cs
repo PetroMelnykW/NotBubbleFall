@@ -8,10 +8,10 @@ namespace NotBubbleFall.Data
     [CreateAssetMenu(fileName = "BubbleData", menuName = "Data/ProjectileDB", order = 1)]
     public class ProjectileDB : ScriptableObject, IService
     {
-        [SerializeField] private GameObject _bubblePrefab;
+        [SerializeField] private GameObject _bubbleProjectilePrefab;
         [SerializeField] private BubbleData[] _bubblesData;
 
-        public GameObject BubblePrefab => _bubblePrefab;
+        public GameObject BubbleProjectilePrefab => _bubbleProjectilePrefab;
         public BubbleData[] BubblesData => _bubblesData;
 
         public BubbleData GetBubbleData(BubbleColorType bubbleColor)

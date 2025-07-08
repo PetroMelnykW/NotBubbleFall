@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7a1fa697f18224d81d0305f09b5683, type: 3}
   m_Name: ProjectileDB
   m_EditorClassIdentifier: 
-  _bubblePrefab: {fileID: 6796555305493297340, guid: e2ed4c75f0f9fec40b0262c82c6f3848, type: 3}
+  _bubbleProjectilePrefab: {fileID: 6796555305493297340, guid: f96e7ef3f12eaaf44b4b236d95701ae7, type: 3}
   _bubblesData:
   - _bubbleColor: 0
     _bubbleMaterial: {fileID: 2100000, guid: a1bb9b632e7c70444b332e1bba60910a, type: 2}

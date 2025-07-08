@@ -1,6 +1,6 @@
+using NotBubbleFall.Data;
+using NotBubbleFall.Signals;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.EnhancedTouch;
 
 namespace NotBubbleFall.Gameplay
 {
@@ -8,23 +8,59 @@ namespace NotBubbleFall.Gameplay
     {
         [SerializeField] private GameObject _testProjectilePrefab;
 
-        private void OnEnable()
+        private BubbleProjectile _currentProjectile;
+        private Projectile _replacingProjectile = null;
+
+        private ProjectileDB _projectileDB;
+
+        private void Awake()
         {
-            EnhancedTouchSupport.Enable();
+            SignalBus.Subscribe<LaunchTouchMovedSignal>(OnLaunchTouchMoved);
+            SignalBus.Subscribe<LaunchTouchEndedSignal>(OnLaunchTouchEnded);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
-            EnhancedTouchSupport.Disable();
+            SignalBus.Unsubscribe<LaunchTouchMovedSignal>(OnLaunchTouchMoved);
+            SignalBus.Unsubscribe<LaunchTouchEndedSignal>(OnLaunchTouchEnded);
         }
 
-        private void Update()
+        private void Start()
         {
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            _projectileDB = ServiceLocator.Resolve<ProjectileDB>();
+        }
+
+        private void LaunchProjectile(Vector3 direction)
+        {
+            // TODO
+            var projectile = Instantiate(_testProjectilePrefab, transform.position, Quaternion.identity).GetComponent<BubbleProjectile>();
+            projectile.SetDirection(direction);
+        }
+
+        private void SwitchBubbles()
+        {
+
+        }
+
+        private Vector3 GetPointAtHeight(Vector2 screenPosition)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+
+            float t = (0.25f - ray.origin.y) / ray.direction.y;
+
+            return ray.origin + ray.direction * t;
+        }
+
+        private void OnLaunchTouchMoved(object sender, LaunchTouchMovedSignal signalData)
+        {
+            
+        }
+
+        private void OnLaunchTouchEnded(object sender, LaunchTouchEndedSignal signalData)
+        {
+            if (signalData.isInLaunchableZone)
             {
-                var testProjectile = Instantiate(_testProjectilePrefab);
-                testProjectile.transform.position = transform.position;
-                testProjectile.GetComponent<Projectile>().SetDirection(Vector3.forward + Vector3.left);
+                LaunchProjectile((GetPointAtHeight(signalData.releasePosition) - transform.position).normalized);
             }
         }
     }
