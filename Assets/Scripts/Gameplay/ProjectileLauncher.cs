@@ -11,6 +11,7 @@ namespace NotBubbleFall.Gameplay
         [SerializeField] private Transform _directionHint;
 
         private BubbleProjectile _currentProjectile;
+        private BubbleProjectile _nextProjectile;
         private Projectile _replacingProjectile = null;
 
         private ProjectileDB _projectileDB;
