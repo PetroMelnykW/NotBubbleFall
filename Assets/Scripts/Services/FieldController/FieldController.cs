@@ -24,26 +24,31 @@ namespace NotBubbleFall.Services
         private List<Bubble> _bubbles = new List<Bubble>();
         private Bubble[] _rootBubbles = new Bubble[13];
 
+        private ProjectileLauncher _projectileLauncher;
         private ProjectileDB _projectileDB;
         private IBubblePressetFactory _bubblePressetFactory;
         private IGameManager _gameManager;
 
         public void StardField()
         {
+            _projectileLauncher.LoadLauncher();
             _isFieldActive = true;
         }
 
         public void StopField()
         {
+            _projectileLauncher.UnloadLauncher();
             _isFieldActive = false;
         }
 
         public void ResetField()
         {
+            _projectileLauncher.UnloadLauncher();
             foreach (var bubble in _bubbles)
             {
                 Destroy(bubble.gameObject);
             }
+            _projectileLauncher.LoadLauncher();
         }
 
         public void AddBubble(Bubble bubble)
@@ -75,6 +80,7 @@ namespace NotBubbleFall.Services
 
         private void Start()
         {
+            _projectileLauncher = ServiceLocator.Resolve<ProjectileLauncher>();
             _projectileDB = ServiceLocator.Resolve<ProjectileDB>();
             _bubblePressetFactory = ServiceLocator.Resolve<IBubblePressetFactory>();
             _gameManager = ServiceLocator.Resolve<IGameManager>();

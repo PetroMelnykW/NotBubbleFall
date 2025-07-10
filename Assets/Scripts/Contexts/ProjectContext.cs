@@ -14,7 +14,7 @@ namespace NotBubbleFall
             ServiceLocator.Register(_bubbleDB);
         }
 
-        protected override void Deinitialize()
+        protected override void Delete()
         {
             ServiceLocator.Unregister(_projectileDB);
             ServiceLocator.Unregister(_bubbleDB);

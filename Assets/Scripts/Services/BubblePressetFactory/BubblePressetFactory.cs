@@ -16,10 +16,12 @@ namespace NotBubbleFall.Services
             return bubblePressetObject;
         }
 
-        public void Inject()
+        public void Resolve()
         {
             _bubbleDB = ServiceLocator.Resolve<BubbleDB>();
         }
+
+        public void Initialize() { }
     }
 
 }

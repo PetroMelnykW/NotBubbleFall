@@ -2,7 +2,7 @@ namespace NotBubbleFall
 {
     public interface IInitializableService : IService
     {
-        void Inject() { }
-        void Initialize() { }
+        void Resolve();
+        void Initialize();
     }
 }

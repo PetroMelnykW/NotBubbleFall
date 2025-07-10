@@ -21,13 +21,13 @@ namespace NotBubbleFall
 
         private void OnDestroy()
         {
-            Deinitialize();
+            Delete();
         }
 
         protected virtual void Create() { }
         protected virtual void Inject() { }
         protected virtual void Initialize() { }
-        protected virtual void Deinitialize() { }
+        protected virtual void Delete() { }
     }
 }
 

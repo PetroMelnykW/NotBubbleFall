@@ -49,6 +49,9 @@ namespace NotBubbleFall.UI
                 if (touch.phase == TouchPhase.Began && _activeTouchId == -1)
                 {
                     _activeTouchId = touch.touchId;
+                    var touchPosition = touch.screenPosition;
+                    var isInLaunchableZone = IsPointerInsideRect(touchPosition);
+                    SignalBus.Emit(this, new LaunchTouchMovedSignal { isInLaunchableZone = isInLaunchableZone, touchPosition = touchPosition });
                 }
                 else if (touch.phase == TouchPhase.Moved && _activeTouchId == touch.touchId)
                 {
