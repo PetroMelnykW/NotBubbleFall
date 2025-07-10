@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7b0800d9cea76459719427a655ee0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fieldSpeed: 0.8
+  _fieldSpeed: 0.4
   _spawnPoint: {fileID: 150885142}
   _gameEndPoint: {fileID: 1002698583}
   _bubbleParent: {fileID: 603619982}
