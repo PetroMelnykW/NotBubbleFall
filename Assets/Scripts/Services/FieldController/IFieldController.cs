@@ -1,4 +1,5 @@
 using NotBubbleFall.Gameplay;
+using System.Collections.Generic;
 
 namespace NotBubbleFall
 {
@@ -8,7 +9,8 @@ namespace NotBubbleFall
         void StardField();
         void StopField();
         void ResetField();
-        void AddBubble(Bubble bubble);
-        void RemoveBubble(Bubble bubble);
+        void AttachBubble(Bubble newBubble, Bubble anchorBubble);
+        void PopBubble(Bubble bubble);
+        void PopBubbles(IEnumerable<Bubble> bubbles);
     }
 }

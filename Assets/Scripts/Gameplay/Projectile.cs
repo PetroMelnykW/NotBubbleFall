@@ -42,7 +42,7 @@ namespace NotBubbleFall.Gameplay
             }
         }
 
-        abstract protected void OnHitBubble(Bubble bubble);
+        abstract protected void OnHitBubble(Bubble hitBubble);
     }
 }
 

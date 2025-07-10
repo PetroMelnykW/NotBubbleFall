@@ -61,6 +61,14 @@ namespace NotBubbleFall.Gameplay
             }
         }
 
+        public void ClearConnections()
+        {
+            foreach (var connection in new List<Bubble>(_connections))
+            {
+                RemoveMutualConnection(connection);
+            }
+        }
+
         private void Awake()
         {
             _meshRenderer = GetComponent<MeshRenderer>();

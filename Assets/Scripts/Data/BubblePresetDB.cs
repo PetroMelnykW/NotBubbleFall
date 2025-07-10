@@ -33,7 +33,7 @@ namespace NotBubbleFall.Data
                 return null;
             }
 
-            return unlockedPressets[UnityEngine.Random.Range(0, unlockedPressets.Count)];
+            return unlockedPressets.PickRandom();
         }
 
         public List<BubbleColorType> GetUnlockedColorsForPhase(int phase)
