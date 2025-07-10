@@ -106,8 +106,8 @@ namespace NotBubbleFall.Gameplay
                     _nextBubbleProjectile.transform.localScale = Vector3.zero;
 
                     _animationTween = DOTween.Sequence()
-                        .Append(_currentBubbleProjectile.transform.DOScale(currentBubbleTargetScale, 1f))
-                        .Join(_nextBubbleProjectile.transform.DOScale(nextBubbleTargetScale, 1f));
+                        .Append(_currentBubbleProjectile.transform.DOScale(currentBubbleTargetScale, LaunchSpeed))
+                        .Join(_nextBubbleProjectile.transform.DOScale(nextBubbleTargetScale, LaunchSpeed));
 
                     break;
                 }

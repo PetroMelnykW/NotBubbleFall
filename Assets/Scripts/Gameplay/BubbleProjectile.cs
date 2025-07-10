@@ -15,14 +15,20 @@ namespace NotBubbleFall.Gameplay
             new Vector3(-0.15f, 0, -0.25f),
         };
 
+        private bool _isPlaced = false;
 
         protected override void OnHitBubble(Bubble bubble)
         {
-            PlaceBubbleOnField(bubble);
+            if (!_isPlaced)
+            {
+                PlaceBubbleOnField(bubble);
+            }
         }
 
         private void PlaceBubbleOnField(Bubble hitBubble)
         {
+            _isPlaced = true;
+
             // Place the bubble at the closest free position around the hit bubble
             var closestFreePosition = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
 
@@ -30,7 +36,7 @@ namespace NotBubbleFall.Gameplay
             {
                 var placementPosition = hitBubble.transform.position + direction;
 
-                if (!Physics.CheckSphere(placementPosition, 0.28f, 0))
+                if (!Physics.CheckSphere(placementPosition, 0.14f, 1 << LayerMask.NameToLayer("Default")))
                 {
                     if (Vector3.Distance(transform.position, placementPosition) < Vector3.Distance(transform.position, closestFreePosition))
                     {
