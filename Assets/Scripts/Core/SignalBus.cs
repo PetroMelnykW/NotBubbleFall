@@ -1,3 +1,6 @@
+using NotBubbleFall.UI;
+using System;
+
 namespace NotBubbleFall
 {
     public interface ISignal { }
@@ -19,6 +22,11 @@ namespace NotBubbleFall
         public static void Emit<T>(object sender, T signalData) where T : ISignal
         {
             SignalHelper<T>.Emit(sender, signalData);
+        }
+
+        internal static void Subscribe<T>(ScoreLabel scoreLabel, object onScoreUpdated)
+        {
+            throw new NotImplementedException();
         }
 
         private static class SignalHelper<T> where T : ISignal

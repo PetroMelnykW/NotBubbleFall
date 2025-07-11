@@ -1,4 +1,5 @@
 using NotBubbleFall.Data;
+using Services.Services;
 using UnityEngine;
 
 namespace NotBubbleFall
@@ -12,12 +13,24 @@ namespace NotBubbleFall
         {
             ServiceLocator.Register(_projectileDB);
             ServiceLocator.Register(_bubbleDB);
+            ServiceLocator.Register<IScoreManager>(new ScoreManager());
+        }
+
+        protected override void Inject()
+        {
+            ServiceLocator.Resolve<IScoreManager>().Resolve();
+        }
+
+        protected override void Initialize()
+        {
+            ServiceLocator.Resolve<IScoreManager>().Initialize();
         }
 
         protected override void Delete()
         {
             ServiceLocator.Unregister(_projectileDB);
             ServiceLocator.Unregister(_bubbleDB);
+            ServiceLocator.Unregister<IScoreManager>();
         }
     }
 }

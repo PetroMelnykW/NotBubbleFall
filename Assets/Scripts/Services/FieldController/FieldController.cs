@@ -2,7 +2,6 @@ using NotBubbleFall.Data;
 using NotBubbleFall.Gameplay;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Android.Gradle;
 using UnityEngine;
 
 namespace NotBubbleFall.Services
@@ -10,6 +9,7 @@ namespace NotBubbleFall.Services
     public class FieldController : MonoBehaviour, IFieldController
     {
         const float BubbleRowInterval = 0.25f;
+        const int BubbleScoreValue = 10;
 
         private static readonly Vector3[] HexNeighborOffsets = new Vector3[]
         {
@@ -39,6 +39,7 @@ namespace NotBubbleFall.Services
         private ProjectileDB _projectileDB;
         private IBubblePressetFactory _bubblePressetFactory;
         private IGameManager _gameManager;
+        private IScoreManager _scoreManager;
 
         public void StardField()
         {
@@ -127,6 +128,7 @@ namespace NotBubbleFall.Services
             _projectileDB = ServiceLocator.Resolve<ProjectileDB>();
             _bubblePressetFactory = ServiceLocator.Resolve<IBubblePressetFactory>();
             _gameManager = ServiceLocator.Resolve<IGameManager>();
+            _scoreManager = ServiceLocator.Resolve<IScoreManager>();
         }
 
         private void FixedUpdate()
@@ -149,6 +151,7 @@ namespace NotBubbleFall.Services
         {
             _bubbles.Remove(bubble);
             bubble.ClearConnections();
+            _scoreManager.AddScore(BubbleScoreValue);
             Destroy(bubble.gameObject);
         }
 
@@ -176,7 +179,6 @@ namespace NotBubbleFall.Services
         private void FindAndDestroySameColorBubbles(Bubble startBubble)
         {
             var targetColor = startBubble.BubbleColor;
-            print(targetColor);
 
             HashSet<Bubble> matchingBubbles = new HashSet<Bubble>();
             Stack<Bubble> stack = new Stack<Bubble>();
