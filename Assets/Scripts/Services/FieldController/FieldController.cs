@@ -1,5 +1,6 @@
 using NotBubbleFall.Data;
 using NotBubbleFall.Gameplay;
+using NotBubbleFall.Signals;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +11,11 @@ namespace NotBubbleFall.Services
     {
         const float BubbleRowInterval = 0.25f;
         const int BubbleScoreValue = 10;
+        const int ScoreToPhase = 5000;
+        const float FarSpeedModifier = 2f;
+        const float CloseSpeedModifier = 0.5f;
+        const float CloseDistanceThreshold = 3f;
+        const float FarDistanceThreshold = 10f;
 
         private static readonly Vector3[] HexNeighborOffsets = new Vector3[]
         {
@@ -21,7 +27,7 @@ namespace NotBubbleFall.Services
             new Vector3(-0.15f, 0, -0.25f),
         };
 
-        [SerializeField] private float _fieldSpeed = 1.0f;
+        [SerializeField] private float _baseFieldSpeed = 1.0f;
 
         [Space(10)]
         [SerializeField] private Transform _spawnPoint;
@@ -30,6 +36,26 @@ namespace NotBubbleFall.Services
 
         public int CurrentPhase => _currentPhase;
 
+        private float ModifiedFieldSpeed
+        {
+            get
+            {
+                if (_distanceToEndPoint < CloseDistanceThreshold)
+                {
+                    return _baseFieldSpeed * CloseSpeedModifier;
+                }
+                else if (_distanceToEndPoint > FarDistanceThreshold)
+                {
+                    return _baseFieldSpeed * FarSpeedModifier;
+                }
+                else
+                {
+                    return _baseFieldSpeed;
+                }
+            }
+        }
+
+        private float _distanceToEndPoint;
         private int _currentPhase = 0;
         private bool _isFieldActive = false;
         private List<Bubble> _bubbles = new List<Bubble>();
@@ -53,14 +79,21 @@ namespace NotBubbleFall.Services
             _isFieldActive = false;
         }
 
-        public void ResetField()
+        public void ClearField()
         {
-            _projectileLauncher.UnloadLauncher();
+            _currentPhase = 0;
             foreach (var bubble in _bubbles)
             {
                 Destroy(bubble.gameObject);
             }
-            _projectileLauncher.LoadLauncher();
+            _bubbles = new List<Bubble>();
+            _rootBubbles = new Bubble[13];
+        }
+
+        public void RestartField()
+        {
+            ClearField();
+            StardField();
         }
 
         public void AttachBubble(Bubble newBubble, Bubble anchorBubble)
@@ -115,11 +148,13 @@ namespace NotBubbleFall.Services
         private void Awake()
         {
             ServiceLocator.Register<IFieldController>(this);
+            SignalBus.Subscribe<ScoreUpdatedSignal>(OnScoreUpdated);
         }
 
         private void OnDestroy()
         {
             ServiceLocator.Unregister<IFieldController>(this);
+            SignalBus.Unsubscribe<ScoreUpdatedSignal>(OnScoreUpdated);
         }
 
         private void Start()
@@ -152,8 +187,7 @@ namespace NotBubbleFall.Services
             _bubbles.Remove(bubble);
             if (_rootBubbles.Contains(bubble))
             {
-                int index = System.Array.IndexOf(_rootBubbles, bubble);
-                _rootBubbles[index] = null;
+                _rootBubbles[System.Array.IndexOf(_rootBubbles, bubble)] = null;
             }
             bubble.ClearConnections();
             _scoreManager.AddScore(BubbleScoreValue);
@@ -162,20 +196,30 @@ namespace NotBubbleFall.Services
 
         private void ProcessFieldMovement()
         {
+            float closestDistanceToEnd = Mathf.Infinity;
+
             foreach (var bubble in _bubbles)
             {
-                bubble.transform.position += Vector3.back * _fieldSpeed * Time.fixedDeltaTime;
+                bubble.transform.position += Vector3.back * ModifiedFieldSpeed * Time.fixedDeltaTime;
+
+                var distanceToEnd = Mathf.Abs(bubble.transform.position.z - _gameEndPoint.position.z);
+                if (distanceToEnd < closestDistanceToEnd)
+                {
+                    closestDistanceToEnd = distanceToEnd;
+                }
 
                 if (bubble.transform.position.z < _gameEndPoint.position.z)
                 {
                     _gameManager.EndGame();
                 }
             }
+
+            _distanceToEndPoint = closestDistanceToEnd;
         }
 
         private void CheckSpawnPoint()
         {
-            if (IsRootRowEmpty() || _rootBubbles[0].transform.position.z < _spawnPoint.position.z)
+            if (IsRootRowEmpty() || _rootBubbles.First(rb => rb != null).transform.position.z < _spawnPoint.position.z)
             {
                 SpawnBubblePresset();
             }
@@ -348,6 +392,11 @@ namespace NotBubbleFall.Services
         private bool IsRootRowEmpty()
         {
             return _rootBubbles.All(b => b == null);
+        }
+
+        private void OnScoreUpdated(object sender, ScoreUpdatedSignal signalData)
+        {
+            _currentPhase = signalData.score / ScoreToPhase;
         }
     }
 }

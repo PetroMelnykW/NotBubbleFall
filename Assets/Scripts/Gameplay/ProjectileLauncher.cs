@@ -35,8 +35,16 @@ namespace NotBubbleFall.Gameplay
 
         public void UnloadLauncher()
         {
-            Destroy(_currentBubbleProjectile.gameObject);
-            Destroy(_nextBubbleProjectile.gameObject);
+            _currentBubbleProjectile = null;
+            _currentBubbleProjectile = null;
+            if (_currentBubbleProjectile != null)
+            {
+                Destroy(_currentBubbleProjectile.gameObject);
+            }
+            if (_nextBubbleProjectile != null)
+            {
+                Destroy(_nextBubbleProjectile.gameObject);
+            }
             _animationTween.Kill();
             _animationTween = null;
         }
@@ -65,6 +73,7 @@ namespace NotBubbleFall.Gameplay
         private void LaunchProjectile(Vector3 direction)
         {
             _currentBubbleProjectile.SetDirection(direction);
+            _currentBubbleProjectile.transform.LookAt(_currentBubbleProjectile.transform.position + direction, Vector3.up);
             _currentBubbleProjectile = _nextBubbleProjectile;
             _nextBubbleProjectile = _projectileFactory.CreateRandomProjectile();
             _nextBubbleProjectile.transform.position = _nextProjectilePoint.position;
@@ -168,7 +177,10 @@ namespace NotBubbleFall.Gameplay
 
         private void OnLaunchTouchEnded(object sender, LaunchTouchEndedSignal signalData)
         {
-            var canLaunch = signalData.isInLaunchableZone && _animationTween == null && _directionHint.gameObject.activeSelf;
+            var canLaunch = signalData.isInLaunchableZone 
+                && _animationTween == null 
+                && _directionHint.gameObject.activeSelf
+                && _currentBubbleProjectile != null;
 
             if (canLaunch)
             {

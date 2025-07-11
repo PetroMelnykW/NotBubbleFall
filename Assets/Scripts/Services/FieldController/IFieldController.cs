@@ -8,7 +8,8 @@ namespace NotBubbleFall
         int CurrentPhase { get; }
         void StardField();
         void StopField();
-        void ResetField();
+        void ClearField();
+        void RestartField();
         void AttachBubble(Bubble newBubble, Bubble anchorBubble);
         void PopBubble(Bubble bubble);
         void PopBubbles(IEnumerable<Bubble> bubbles);

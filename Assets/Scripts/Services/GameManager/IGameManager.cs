@@ -5,6 +5,7 @@ namespace NotBubbleFall
         bool IsGameRunning { get; }
         void StartGame();
         void EndGame();
-        void ResetGame();
+        void RestartGame();
+        void StopGame();
     }
 }

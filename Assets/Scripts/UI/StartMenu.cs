@@ -18,8 +18,18 @@ namespace NotBubbleFall.UI
 
             switch (animationName)
             {
-                case "Hide":
+                case "Show":
+                    _canvasGroup.alpha = 0f;
                     _canvasGroup.interactable = false;
+                    _canvasGroup.blocksRaycasts = true;
+                    _tween = _canvasGroup.DOFade(1f, 0.8f)
+                        .SetEase(Ease.InCubic)
+                        .OnComplete(() => _canvasGroup.interactable = true);
+                    break;
+                case "Hide":
+                    _canvasGroup.alpha = 1f;
+                    _canvasGroup.interactable = false;
+                    _canvasGroup.blocksRaycasts = true;
                     _tween = _canvasGroup.DOFade(0f, 0.8f)
                         .SetEase(Ease.OutCubic)
                         .OnComplete(() => _canvasGroup.blocksRaycasts = false);

@@ -28,5 +28,25 @@ MonoBehaviour:
   _phaseConfigs:
   - _phase: 0
     _unlockedPresets:
+    - {fileID: 1149618378574091332, guid: b7bd19b982623674f88ea88a59e603a2, type: 3}
+    - {fileID: 1149618378574091332, guid: 63d7f92263c01ad4a80aa88e403aa532, type: 3}
+    - {fileID: 1149618378574091332, guid: c5b49d5419e4ba440b9467dbe89218ab, type: 3}
+    - {fileID: 1149618378574091332, guid: 065a7acde36918c4784bf5a17a9577d6, type: 3}
     - {fileID: 1149618378574091332, guid: 9b53718e677b1c54a89d93effe8d7fcd, type: 3}
     _unlockedBubbleProjectileColors: 030000000400000001000000
+  - _phase: 1
+    _unlockedPresets:
+    - {fileID: 1149618378574091332, guid: c0988896431828148af4222b7aa61125, type: 3}
+    - {fileID: 1149618378574091332, guid: aa0e46354061a144cbab54e851f1061c, type: 3}
+    - {fileID: 1149618378574091332, guid: 44e46e3e29dfb50428f152a355003a8c, type: 3}
+    - {fileID: 1149618378574091332, guid: e55fa51f33c49c046921e3c0960565c9, type: 3}
+    - {fileID: 1149618378574091332, guid: 6a8cfeaac4a7a544db977d4fc8cffb05, type: 3}
+    _unlockedBubbleProjectileColors: 02000000
+  - _phase: 2
+    _unlockedPresets:
+    - {fileID: 1149618378574091332, guid: 5c2c41c6f35004f47b80876bc49784a6, type: 3}
+    - {fileID: 1149618378574091332, guid: 1dd9545777b518d44abf2b73c93f6e73, type: 3}
+    - {fileID: 1149618378574091332, guid: 16169a72fa94f23449afef4eb63ed5b8, type: 3}
+    - {fileID: 1149618378574091332, guid: eaf23707315f4e5498d97471300fae6d, type: 3}
+    - {fileID: 1149618378574091332, guid: 267366d0799aff5489fc81e7063e33a2, type: 3}
+    _unlockedBubbleProjectileColors: 05000000
