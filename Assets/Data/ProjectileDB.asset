@@ -15,6 +15,6 @@ MonoBehaviour:
   _bubbleProjectilePrefab: {fileID: 6796555305493297340, guid: f96e7ef3f12eaaf44b4b236d95701ae7, type: 3}
   _specialProjectilesData:
   - _type: 0
-    _prefab: {fileID: 6796555305493297340, guid: f96e7ef3f12eaaf44b4b236d95701ae7, type: 3}
+    _prefab: {fileID: 6796555305493297340, guid: b10e285bf9e98334fa2578a89041b4eb, type: 3}
   - _type: 1
-    _prefab: {fileID: 6796555305493297340, guid: f96e7ef3f12eaaf44b4b236d95701ae7, type: 3}
+    _prefab: {fileID: 6796555305493297340, guid: 5eb66d885628b75488a40e912e741749, type: 3}

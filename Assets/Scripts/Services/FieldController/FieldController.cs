@@ -150,6 +150,11 @@ namespace NotBubbleFall.Services
         private void RemoveBubble(Bubble bubble)
         {
             _bubbles.Remove(bubble);
+            if (_rootBubbles.Contains(bubble))
+            {
+                int index = System.Array.IndexOf(_rootBubbles, bubble);
+                _rootBubbles[index] = null;
+            }
             bubble.ClearConnections();
             _scoreManager.AddScore(BubbleScoreValue);
             Destroy(bubble.gameObject);

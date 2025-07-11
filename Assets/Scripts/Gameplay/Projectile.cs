@@ -42,6 +42,14 @@ namespace NotBubbleFall.Gameplay
             }
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out Bubble bubble))
+            {
+                OnHitBubble(bubble);
+            }
+        }
+
         abstract protected void OnHitBubble(Bubble hitBubble);
     }
 }
