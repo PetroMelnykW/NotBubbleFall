@@ -1,3 +1,4 @@
+using DG.Tweening;
 using NotBubbleFall.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace NotBubbleFall.Gameplay
 
         private List<Bubble> _connections = new List<Bubble>();
         private BubbleColorType _bubbleColor = BubbleColorType.Default;
+        private Sequence _popSequence;
 
         private MeshRenderer _meshRenderer;
         private BubbleDB _bubbleDB;
@@ -69,6 +71,22 @@ namespace NotBubbleFall.Gameplay
             }
         }
 
+        public void Pop()
+        {
+            Destroy(GetComponent<BubbleProjectile>());
+            Destroy(GetComponent<Rigidbody>());
+            Destroy(GetComponent<Collider>());
+
+            _popSequence = DOTween.Sequence()
+                .Append(transform.DOMoveY(transform.position.y + 1, 1f))
+                .Join(transform.DOScale(0f, 1f))
+                .OnComplete(() =>
+                {
+                    gameObject.SetActive(false);
+                    Destroy(gameObject, 1f);
+                });
+        }
+
         private void Awake()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
@@ -76,6 +94,11 @@ namespace NotBubbleFall.Gameplay
 
             // Set the initial bubble color based on the material
             _bubbleColor = _bubbleDB.BubblesData.FirstOrDefault(d => d.BubbleMaterial == _meshRenderer.sharedMaterial)?.BubbleColor ?? default;
+        }
+
+        private void OnDestroy()
+        {
+            _popSequence?.Kill();
         }
     }
 }

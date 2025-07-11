@@ -157,7 +157,7 @@ namespace NotBubbleFall.Services
             }
             bubble.ClearConnections();
             _scoreManager.AddScore(BubbleScoreValue);
-            Destroy(bubble.gameObject);
+            bubble.Pop();
         }
 
         private void ProcessFieldMovement()
